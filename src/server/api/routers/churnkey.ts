@@ -1,7 +1,7 @@
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 
 export const churnkeyRouter = createTRPCRouter({
-  triggerCancelFlow: publicProcedure.mutation(async () => {
+  triggerCancelFlow: publicProcedure.query(async () => {
     const customerId = String(process.env.NEXT_PUBLIC_CHURNKEY_CUSTOMER_ID);
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_LOCAL_URL}api/churnkey`,

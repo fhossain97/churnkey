@@ -9,57 +9,63 @@ import {
   Typography,
 } from "@mui/material";
 import { formatBillingDate } from "lib/helper";
-import { type Churnkey } from "lib/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { subscription } from "testData/seedSubscriptionData";
 import { Layout } from "~/components/Layout/Layout";
 import DisplayInfo from "~/components/Settings/DisplayInfo";
 import { api } from "~/utils/api";
 
-declare global {
-  interface Window {
-    churnkey?: Churnkey;
-  }
-}
-
 export default function Settings({ scriptLoaded }: { scriptLoaded: boolean }) {
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const cancelFlow = api.churnkey.triggerCancelFlow.useMutation({
-    onSuccess: (userHash) => {
-      try {
-        if (scriptLoaded && userHash) {
-          document
-            ?.getElementById("cancel-button")
-            ?.addEventListener("click", function () {
-              if (
-                window.churnkey &&
-                typeof window.churnkey.init === "function"
-              ) {
-                window.churnkey.init("show", {
-                  customerId: String(
-                    process.env.NEXT_PUBLIC_CHURNKEY_CUSTOMER_ID,
-                  ),
-                  authHash: userHash,
-                  appId: String(process.env.NEXT_PUBLIC_CHURNKEY_APP_ID),
-                  mode: "test",
-                  provider: "stripe",
-                  preview: true,
-                  record: false,
-                  report: false,
-                });
-              }
-            });
-        }
-      } catch (error) {
-        throw new Error(
-          `Unable to reach Churnkey for Cancel Flow ${JSON.stringify(error)}`,
-        );
-      }
-    },
-  });
+  const [userHash, setUserHash] = useState<string | null>(null);
+
+  const { data: cancelFlow, isLoading: loadingCancelFlow } =
+    api.churnkey.triggerCancelFlow.useQuery();
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
+  };
+
+  if (scriptLoaded && userHash) {
+    document
+      ?.getElementById("cancel-button")
+      ?.addEventListener("click", function () {
+        window?.churnkey?.init("show", {
+          customerId: String(process.env.NEXT_PUBLIC_CHURNKEY_CUSTOMER_ID),
+          authHash: userHash,
+          appId: String(process.env.NEXT_PUBLIC_CHURNKEY_APP_ID),
+          mode: "test",
+          provider: "stripe",
+          preview: true,
+          record: false,
+          report: false,
+        });
+      });
+  }
+
+  useEffect(() => {
+    if (!loadingCancelFlow) {
+      setUserHash(String(cancelFlow));
+    }
+  }, [userHash, loadingCancelFlow, cancelFlow]);
+
+  const handleClickMutation = () => {
+    if (scriptLoaded && userHash) {
+      document
+        ?.getElementById("cancel-button")
+        ?.addEventListener("click", function () {
+          window?.churnkey?.init("show", {
+            customerId: String(process.env.NEXT_PUBLIC_CHURNKEY_CUSTOMER_ID),
+            authHash: userHash,
+            appId: String(process.env.NEXT_PUBLIC_CHURNKEY_APP_ID),
+            mode: "test",
+            provider: "stripe",
+            preview: true,
+            record: false,
+            report: false,
+          });
+        });
+    }
   };
 
   return (
@@ -139,8 +145,7 @@ export default function Settings({ scriptLoaded }: { scriptLoaded: boolean }) {
           <Button
             variant="contained"
             id="cancel-button"
-            disabled={!scriptLoaded}
-            onClick={() => cancelFlow.mutate()}
+            onClick={handleClickMutation}
           >
             Cancel
           </Button>

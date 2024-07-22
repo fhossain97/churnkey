@@ -1,10 +1,14 @@
 import { CircularProgress, Stack } from "@mui/material";
+import { useRouter } from "next/router";
 
-const LoadingSkeleton = ({ search }: { search: boolean }) => {
+const LoadingSkeleton = () => {
+  const router = useRouter();
+  const { pathname } = router;
+
   return (
     <Stack
       spacing={2}
-      className={`${search ? "h-full" : "h - 1 / 4"} flex w-full items-center justify-center`}
+      className={`${pathname === "/search" ? "h-full" : "h - 1 / 4"} flex w-full items-center justify-center`}
     >
       <CircularProgress color="secondary" />
     </Stack>

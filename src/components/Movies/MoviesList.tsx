@@ -4,18 +4,20 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import MovieContainer from "./MovieContainer"; // Assuming this is your component
 import { type MovieData } from "lib/types";
+import { useRouter } from "next/router";
 
 const MoviesList = ({
   data,
   title,
-  search,
 }: {
   data: MovieData[] | undefined;
   title: string;
-  search: boolean;
 }) => {
   const [page, setPage] = useState<number>(1);
   const totalPages = data ? Math.ceil(data.length / 4) : 0;
+
+  const router = useRouter();
+  const { pathname } = router;
 
   const handleNext = () => {
     if (page < totalPages) {
@@ -32,7 +34,7 @@ const MoviesList = ({
   return (
     <Stack
       spacing={2}
-      className={`${search ? "h-full" : "h - 1 / 4"} w-full border-solid border-red-500`}
+      className={`${pathname === "/search" ? "flex h-1/4 items-center justify-center" : "h - 1 / 4"} w-full border-solid border-red-500`}
     >
       <Typography variant="h5" className="p-2 text-red-500">
         {title}

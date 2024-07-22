@@ -1,41 +1,49 @@
-# Create T3 App
+# Netflix Mock-up
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+## Introduction
 
-## What's next? How do I make an app with this?
+Welcome to the Netflix Mock-up app! This app allows users to browse through various categories of movies from The Movie Database (TMDB) API. Here’s what you can do:
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+- **Home Page ("/")**: View movies in four categories: "Now Playing", "Popular", "Top Rated", and "Upcoming". Hover over a movie to see its summary.
+- **Navigation Bar**: Navigate to the home page, account management settings, and the search page. The search page allows users to input a query and see the search results.
+- **Account Management Page**: View account details and cancel your subscription via the churnkey cancel flow.
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+## Running the Code Locally
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+To run the project locally, follow these steps:
 
-## Learn More
+1. Install all dependencies:
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+   ```sh
+   npm i
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+   ```
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+2. Start the development server:
+   ```sh
+   npm run dev
+   ```
 
-## How do I deploy this?
+The app will run at http://localhost:3000
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+Wireframe Images
+Mockup of the initial project:
 
-//Goal: install the churnkey cancel isntall flow
-
-//create an account management page
-//seed file with fake product subscriptions (5 subscriptions)
-//each subscription will have an edit button and a cancel button
-//we will display this data on a page that looks like this:
-
-//fake navbar with the following pages: netflix page and then account management for netflix
-//home page will show movies and stuff- api needed to connect it and then we can have a button for account management
-
-//add wireframe here
+Home Page: Displays movies and contains a navigation bar. Home Page
+Account Management Page: Shows account details and a cancel button. Account Management Page
+Onboarding Changes
+Documentation Enhancements
+TypeScript Syntax and Types: Adding documentation with proper TypeScript syntax and types will simplify the implementation of logic.
+Script Placement: Provide guidance on placing the script element in various frameworks. For example, in the T3 stack, the custom script was placed in \_app.tsx where the Script tag for Next.js does not go in the head.
+Generate Secure HMAC Hash: Show the data shape for req.body before destructuring customerId. It's useful to understand the structure even when the customer is hardcoded.
+Launch Churnkey: Split the code into server and client logic to avoid beginners adding everything in one file. Include proper typing for window.churnkey.init and declare a global type to resolve typing issues.
+Testing the Cancel Flow: It would be helpful to see a real-time customer cancellation pop-up in Churnkey instead of having a pre-existing customer account. This is a nice-to-have feature for understanding the process better.
+Notes
+Scrolling Through Movies: For this project, only the first page of the API results is rendered.
+Screenshots of the App
+Home Page:
+Account Management (Settings):
+Search Page:
+Cancel Flow Window Popup and Confirmation of Services Canceled:
+Video
+Check out the video demo of the project: Video Demo

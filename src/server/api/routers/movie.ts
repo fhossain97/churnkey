@@ -10,9 +10,10 @@ export const movieRouter = createTRPCRouter({
       const req = await TMDB(String(process.env.TMDB_BASE_API_URL), endpoint);
       return req;
     }),
+
   searchMovieUsingQuery: publicProcedure
     .input(z.object({ text: z.string(), endpoint: z.string() }))
-    .mutation(async ({ input }) => {
+    .query(async ({ input }) => {
       const { text, endpoint } = input;
       const req = await TMDB(
         String(process.env.TMDB_BASE_SEARCH_URL),

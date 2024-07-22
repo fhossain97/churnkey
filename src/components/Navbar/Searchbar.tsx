@@ -6,6 +6,7 @@ import { api } from "~/utils/api";
 import Home from "~/pages";
 import { type MovieData } from "lib/types";
 import SearchPage from "~/pages/search";
+import { useRouter } from "next/router";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -46,9 +47,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function Searchbar() {
-  const [search, setSearch] = useState<boolean>(false);
-  const [input, setInput] = useState<string>("");
+export default function Searchbar({
+  setInput,
+  setSearch,
+}: {
+  setInput: (input: string) => void;
+  setSearch: (search: boolean) => void;
+}) {
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       setSearch(true);
@@ -79,8 +84,6 @@ export default function Searchbar() {
           />
         </Search>
       </Toolbar>
-      {<Home search={search} />}
-      {<SearchPage search={search} query={input} />}
     </Box>
   );
 }

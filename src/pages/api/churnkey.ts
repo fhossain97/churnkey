@@ -10,7 +10,6 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>,
 ) {
-  //   const { customerId } = req.body;
   const customerId = process.env.NEXT_PUBLIC_CHURNKEY_CUSTOMER_ID;
 
   if (!customerId) {
