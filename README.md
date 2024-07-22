@@ -14,7 +14,9 @@ To run the project locally, follow these steps:
 
 1. Install all dependencies: `npm i`
 
-2. Start the development server: `npm run dev`
+2. Create a .env file at the project root and add in the variables.
+
+3. Start the development server: `npm run dev`
 
 The app will run at locally at _http://localhost:3000/_
 
