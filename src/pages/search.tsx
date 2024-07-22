@@ -33,7 +33,7 @@ export default function SearchPage() {
 
   return (
     <Layout>
-      <Box className="flex w-full items-center justify-center">
+      <Box className="flex flex-col items-center justify-center text-red-500">
         <Typography className="mt-4" variant="h6">
           Search movies within the search box - results will populate below.
         </Typography>
