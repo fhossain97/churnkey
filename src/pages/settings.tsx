@@ -9,34 +9,51 @@ import {
   Typography,
 } from "@mui/material";
 import { formatBillingDate } from "lib/helper";
+import { type Churnkey } from "lib/types";
 import { useState } from "react";
 import { subscription } from "testData/seedSubscriptionData";
 import { Layout } from "~/components/Layout/Layout";
 import DisplayInfo from "~/components/Settings/DisplayInfo";
 import { api } from "~/utils/api";
 
-export default function Settings() {
+declare global {
+  interface Window {
+    churnkey?: Churnkey;
+  }
+}
+
+export default function Settings({ scriptLoaded }: { scriptLoaded: boolean }) {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const cancelFlow = api.churnkey.triggerCancelFlow.useMutation({
     onSuccess: (userHash) => {
-      if (userHash) {
-        try {
+      try {
+        if (scriptLoaded && userHash) {
           document
             ?.getElementById("cancel-button")
             ?.addEventListener("click", function () {
-              window.churnkey.init("show", {
-                customerId: process.env.NEXT_PUBLIC_CHURNKEY_CUSTOMER_ID,
-                authHash: userHash,
-                appId: process.env.NEXT_PUBLIC_CHURNKEY_APP_ID,
-                mode: "test",
-                provider: "stripe",
-                record: false,
-                report: false,
-              });
+              if (
+                window.churnkey &&
+                typeof window.churnkey.init === "function"
+              ) {
+                window.churnkey.init("show", {
+                  customerId: String(
+                    process.env.NEXT_PUBLIC_CHURNKEY_CUSTOMER_ID,
+                  ),
+                  authHash: userHash,
+                  appId: String(process.env.NEXT_PUBLIC_CHURNKEY_APP_ID),
+                  mode: "test",
+                  provider: "stripe",
+                  preview: true,
+                  record: false,
+                  report: false,
+                });
+              }
             });
-        } catch (error) {
-          console.log(error, "in script");
         }
+      } catch (error) {
+        throw new Error(
+          `Unable to reach Churnkey for Cancel Flow ${JSON.stringify(error)}`,
+        );
       }
     },
   });
@@ -122,6 +139,7 @@ export default function Settings() {
           <Button
             variant="contained"
             id="cancel-button"
+            disabled={!scriptLoaded}
             onClick={() => cancelFlow.mutate()}
           >
             Cancel

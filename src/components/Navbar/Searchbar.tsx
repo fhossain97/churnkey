@@ -5,6 +5,7 @@ import { useState } from "react";
 import { api } from "~/utils/api";
 import Home from "~/pages";
 import { type MovieData } from "lib/types";
+import SearchPage from "~/pages/search";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -46,29 +47,16 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Searchbar() {
-  const [searchInput, setSearchInput] = useState<string>("");
   const [search, setSearch] = useState<boolean>(false);
-  const [data, setData] = useState<MovieData[]>([]);
-
-  const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchInput(e.target.value);
-  };
-  const results = api.movie.searchMovieUsingQuery.useMutation();
+  const [input, setInput] = useState<string>("");
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && searchInput) {
+    if (e.key === "Enter") {
       setSearch(true);
-      results.mutate(
-        {
-          endpoint: "movie",
-          text: searchInput,
-        },
-        {
-          onSuccess: (result) => {
-            setData(result);
-          },
-        },
-      );
     }
+  };
+
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(e.target.value);
   };
 
   return (
@@ -86,13 +74,13 @@ export default function Searchbar() {
           </SearchIconWrapper>
           <StyledInputBase
             placeholder="Search…"
-            onChange={handleSearchInput}
+            onChange={handleInput}
             onKeyDown={handleEnter}
-            value={searchInput}
           />
         </Search>
       </Toolbar>
-      {<Home search={search} searchResults={data} />}
+      {<Home search={search} />}
+      {<SearchPage search={search} query={input} />}
     </Box>
   );
 }

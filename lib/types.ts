@@ -41,3 +41,19 @@ export type MovieAPIResponse = {
   page: number;
   results: MovieData[];
 };
+
+export type Churnkey = {
+  init: (
+    action: string,
+    options: {
+      customerId: string;
+      authHash: string;
+      appId: string;
+      mode: string;
+      provider: string;
+      preview: boolean;
+      record: boolean;
+      report: boolean;
+    },
+  ) => void;
+};

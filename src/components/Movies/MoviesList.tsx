@@ -50,15 +50,11 @@ const MoviesList = ({
         <Box
           sx={{ display: "flex", justifyContent: "space-evenly", flexGrow: 1 }}
         >
-          {data && data.length > 0 ? (
-            data
-              .slice((page - 1) * 4, page * 4)
-              .map((movie) => <MovieContainer key={movie.id} data={movie} />)
-          ) : (
-            <Box className="flex items-center justify-center">
-              <Typography variant="h4">No movies found</Typography>
-            </Box>
-          )}
+          {data && data.length > 0
+            ? data
+                .slice((page - 1) * 4, page * 4)
+                .map((movie) => <MovieContainer key={movie.id} data={movie} />)
+            : null}
         </Box>
         <IconButton
           onClick={handleNext}

@@ -3,12 +3,21 @@ import { type AppType } from "next/app";
 import { api } from "~/utils/api";
 import "~/styles/globals.css";
 import Script from "next/script";
+import { useState } from "react";
+import { Box } from "@mui/material";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
+  const [scriptLoaded, setScriptLoaded] = useState<boolean>(false);
+
   return (
-    <div className={GeistSans.className}>
-      <Component {...pageProps} />
-      <Script id="churnkey">
+    <Box className={GeistSans.className}>
+      <Script
+        id="churnkey"
+        strategy="afterInteractive"
+        onReady={() => {
+          setScriptLoaded(true);
+        }}
+      >
         {`(function(){
     if (!window.churnkey || !window.churnkey.created){
     window.churnkey = { created: true }
@@ -20,7 +29,8 @@ const MyApp: AppType = ({ Component, pageProps }) => {
     }
   })()`}
       </Script>
-    </div>
+      <Component {...pageProps} scriptLoaded={scriptLoaded} />
+    </Box>
   );
 };
 

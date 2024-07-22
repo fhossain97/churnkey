@@ -13,7 +13,6 @@ export const env = createEnv({
     TMDB_API_KEY: z.string(),
     TMDB_BASE_SEARCH_URL: z.string(),
     CHURNKEY_API_KEY: z.string(),
-    NEXT_API_URL: z.string(),
   },
 
   /**
@@ -26,6 +25,7 @@ export const env = createEnv({
     NEXT_PUBLIC_TMDB_BASE_IMAGE_URL: z.string(),
     NEXT_PUBLIC_CHURNKEY_APP_ID: z.string(),
     NEXT_PUBLIC_CHURNKEY_CUSTOMER_ID: z.string(),
+    NEXT_PUBLIC_LOCAL_URL: z.string(),
   },
 
   /**
@@ -44,7 +44,7 @@ export const env = createEnv({
     NEXT_PUBLIC_CHURNKEY_APP_ID: process.env.NEXT_PUBLIC_CHURNKEY_APP_ID,
     NEXT_PUBLIC_CHURNKEY_CUSTOMER_ID:
       process.env.NEXT_PUBLIC_CHURNKEY_CUSTOMER_ID,
-    NEXT_API_URL: process.env.NEXT_API_URL,
+    NEXT_PUBLIC_LOCAL_URL: process.env.NEXT_PUBLIC_LOCAL_URL,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   /**
