@@ -13,9 +13,33 @@ import { useState } from "react";
 import { subscription } from "testData/seedSubscriptionData";
 import { Layout } from "~/components/Layout/Layout";
 import DisplayInfo from "~/components/Settings/DisplayInfo";
+import { api } from "~/utils/api";
 
 export default function Settings() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const cancelFlow = api.churnkey.triggerCancelFlow.useMutation({
+    onSuccess: (userHash) => {
+      if (userHash) {
+        try {
+          document
+            ?.getElementById("cancel-button")
+            ?.addEventListener("click", function () {
+              window.churnkey.init("show", {
+                customerId: process.env.NEXT_PUBLIC_CHURNKEY_CUSTOMER_ID,
+                authHash: userHash,
+                appId: process.env.NEXT_PUBLIC_CHURNKEY_APP_ID,
+                mode: "test",
+                provider: "stripe",
+                record: false,
+                report: false,
+              });
+            });
+        } catch (error) {
+          console.log(error, "in script");
+        }
+      }
+    },
+  });
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -95,7 +119,13 @@ export default function Settings() {
           </Box>
         </Box>
         <Box className="m-5 flex items-center justify-center">
-          <Button variant="contained">Cancel</Button>
+          <Button
+            variant="contained"
+            id="cancel-button"
+            onClick={() => cancelFlow.mutate()}
+          >
+            Cancel
+          </Button>
         </Box>
       </Box>
     </Layout>

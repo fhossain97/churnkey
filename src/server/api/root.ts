@@ -1,5 +1,6 @@
 import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
 import { movieRouter } from "./routers/movie";
+import { churnkeyRouter } from "./routers/churnkey";
 
 /**
  * This is the primary router for your server.
@@ -8,6 +9,7 @@ import { movieRouter } from "./routers/movie";
  */
 export const appRouter = createTRPCRouter({
   movie: movieRouter,
+  churnkey: churnkeyRouter,
 });
 
 // export type definition of API
