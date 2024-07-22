@@ -8,7 +8,6 @@ import {
 } from "@mui/material";
 import { type IconWithText } from "lib/types";
 import Link from "next/link";
-import React from "react";
 
 const AlignIconWithText = ({ iconInfo }: { iconInfo: IconWithText[] }) => {
   return (

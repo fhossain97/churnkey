@@ -1,12 +1,6 @@
 import { styled, alpha } from "@mui/material/styles";
 import { Box, Toolbar, IconButton, InputBase } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { useState } from "react";
-import { api } from "~/utils/api";
-import Home from "~/pages";
-import { type MovieData } from "lib/types";
-import SearchPage from "~/pages/search";
-import { useRouter } from "next/router";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",

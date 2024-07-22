@@ -1,6 +1,5 @@
 import { Box, Typography } from "@mui/material";
 import { type MovieData } from "lib/types";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Layout } from "~/components/Layout/Layout";
 import MoviesList from "~/components/Movies/MoviesList";

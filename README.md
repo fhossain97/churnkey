@@ -73,4 +73,5 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 ## Additional Notes
 
 - Scrolling Through Movies: For this project, only the first page of the API results is rendered.
+- Images/videos should not be stored locally in the repo (for project purposes, I added them locally).
 - I hope you have as much fun going through this app as I had creating it! Thank you!
